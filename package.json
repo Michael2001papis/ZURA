@@ -1,0 +1,14 @@
+{
+  "name": "mp-projects",
+  "version": "1.0.0",
+  "description": "אתר תדמיתי – מ.פ. פרויקטים | שיפוצים ועבודות בניין",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "preview": "npx serve dist",
+    "dev": "npx serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

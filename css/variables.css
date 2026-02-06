@@ -1,0 +1,44 @@
+/* מ.פ. פרויקטים – משתני עיצוב */
+
+/* ========== מצב בהיר ========== */
+:root,
+[data-theme="light"] {
+  --bg-primary: #faf8f5;
+  --bg-secondary: #f0ebe3;
+  --bg-card: #ffffff;
+  --text-primary: #2c2419;
+  --text-secondary: #5c5247;
+  --accent: #8b6914;
+  --accent-soft: #c4a84a;
+  --border: #e0d9ce;
+  --shadow: rgba(44, 36, 25, 0.08);
+  --shadow-strong: rgba(44, 36, 25, 0.12);
+}
+
+/* ========== מצב כהה ========== */
+[data-theme="dark"] {
+  --bg-primary: #0f1210;
+  --bg-secondary: #1a1f1c;
+  --bg-card: #232a26;
+  --text-primary: #e8e6e3;
+  --text-secondary: #a8b0a8;
+  --accent: #4a7c59;
+  --accent-soft: #2d5a3a;
+  --border: #2d3530;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-strong: rgba(0, 0, 0, 0.5);
+}
+
+/* ========== נגישות / כבדי ראייה ========== */
+[data-theme="accessibility"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #ffff00;
+  --bg-card: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --accent: #00ff00;
+  --accent-soft: #90ee90;
+  --border: #000000;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --shadow-strong: rgba(0, 0, 0, 0.4);
+}
