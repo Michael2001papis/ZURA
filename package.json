@@ -5,11 +5,15 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/build.js",
-    "preview": "npx serve dist"
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "serve": "^14.2.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.4.0"
   }
 }
