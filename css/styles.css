@@ -876,10 +876,14 @@ section {
     min-width: 58px;
   }
 
-  .quote-table .col-num {
-    width: 64px;
-    min-width: 56px;
-  }
+.quote-table .col-qty,
+.quote-table .col-pct,
+.quote-table .col-price,
+.quote-table .col-discount,
+.quote-table .col-total {
+  width: 64px;
+  min-width: 56px;
+}
 
   .quote-table input,
   .quote-table select {
@@ -1096,8 +1100,12 @@ section {
     padding: 1.5rem;
   }
 
-  .quote-table .col-num {
-    width: 90px;
+  .quote-table .col-qty,
+  .quote-table .col-pct,
+  .quote-table .col-price,
+  .quote-table .col-discount,
+  .quote-table .col-total {
+    min-width: 76px;
   }
 }
 
@@ -1228,9 +1236,11 @@ section {
 .quote-meta label {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-weight: 500;
   color: var(--text-primary);
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .quote-meta input {
@@ -1254,7 +1264,7 @@ section {
 
 .quote-table {
   width: 100%;
-  min-width: 720px;
+  min-width: 760px;
   border-collapse: collapse;
   font-size: 0.95rem;
   table-layout: fixed;
@@ -1272,12 +1282,28 @@ section {
   color: var(--text-primary);
   background: var(--bg-secondary);
   text-align: right;
-  white-space: nowrap;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
-.quote-table th.col-num,
-.quote-table td.col-num {
+.quote-table th.col-qty,
+.quote-table th.col-pct,
+.quote-table th.col-price,
+.quote-table th.col-discount,
+.quote-table th.col-total,
+.quote-table td.col-qty,
+.quote-table td.col-pct,
+.quote-table td.col-price,
+.quote-table td.col-discount,
+.quote-table td.col-total {
   text-align: center;
+}
+
+.quote-table th.col-pct,
+.quote-table th.col-price {
+  white-space: normal;
+  line-height: 1.3;
+  min-width: 0;
 }
 
 .quote-table .col-work-type {
@@ -1327,9 +1353,29 @@ section {
   min-width: 68px;
 }
 
-.quote-table .col-num {
-  width: 9%;
+.quote-table .col-qty {
+  width: 8%;
+  min-width: 70px;
+}
+
+.quote-table .col-pct {
+  width: 10%;
+  min-width: 88px;
+}
+
+.quote-table .col-price {
+  width: 11%;
+  min-width: 98px;
+}
+
+.quote-table .col-discount {
+  width: 8%;
   min-width: 72px;
+}
+
+.quote-table .col-total {
+  width: 10%;
+  min-width: 82px;
 }
 
 .quote-table .col-action {

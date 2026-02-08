@@ -139,11 +139,11 @@ export default function BusinessArea() {
                 <col className="col-work-type" />
                 <col className="col-description" />
                 <col className="col-unit" />
-                <col className="col-num" />
-                <col className="col-num" />
-                <col className="col-num" />
-                <col className="col-num" />
-                <col className="col-num" />
+                <col className="col-qty" />
+                <col className="col-pct" />
+                <col className="col-price" />
+                <col className="col-discount" />
+                <col className="col-total" />
                 <col className="col-action" />
               </colgroup>
               <thead>
@@ -151,11 +151,11 @@ export default function BusinessArea() {
                   <th scope="col" className="col-work-type">סוג עבודה</th>
                   <th scope="col" className="col-description">תיאור</th>
                   <th scope="col" className="col-unit">יחידה</th>
-                  <th scope="col" className="col-num">כמות</th>
-                  <th scope="col" className="col-num">אחוז עבודה</th>
-                  <th scope="col" className="col-num">מחיר ליחידה (₪)</th>
-                  <th scope="col" className="col-num">הנחה %</th>
-                  <th scope="col" className="col-num">סה"כ (₪)</th>
+                  <th scope="col" className="col-qty">כמות</th>
+                  <th scope="col" className="col-pct">אחוז עבודה</th>
+                  <th scope="col" className="col-price">מחיר ליחידה (₪)</th>
+                  <th scope="col" className="col-discount">הנחה %</th>
+                  <th scope="col" className="col-total">סה"כ (₪)</th>
                   <th scope="col" className="col-action" aria-label="מחיקה"></th>
                 </tr>
               </thead>
@@ -208,7 +208,7 @@ export default function BusinessArea() {
                           ))}
                         </select>
                       </td>
-                      <td className="col-num">
+                      <td className="col-qty">
                         <input
                           type="number"
                           min="0"
@@ -218,7 +218,7 @@ export default function BusinessArea() {
                           aria-label="כמות"
                         />
                       </td>
-                      <td className="col-num">
+                      <td className="col-pct">
                         <select
                           value={row.workPercent}
                           onChange={(e) => updateRow(row.id, "workPercent", e.target.value)}
@@ -229,7 +229,7 @@ export default function BusinessArea() {
                           ))}
                         </select>
                       </td>
-                      <td className="col-num">
+                      <td className="col-price">
                         <input
                           type="number"
                           min="0"
@@ -240,7 +240,7 @@ export default function BusinessArea() {
                           aria-label="מחיר ליחידה"
                         />
                       </td>
-                      <td className="col-num">
+                      <td className="col-discount">
                         <input
                           type="number"
                           min="0"
@@ -252,7 +252,7 @@ export default function BusinessArea() {
                           aria-label="הנחה באחוזים"
                         />
                       </td>
-                      <td className="col-num total-cell">{total.toFixed(2)}</td>
+                      <td className="col-total total-cell">{total.toFixed(2)}</td>
                       <td className="col-action">
                         <button
                           type="button"
@@ -272,7 +272,7 @@ export default function BusinessArea() {
                   <td colSpan={7} className="grand-total-label">
                     סה"כ לתשלום
                   </td>
-                  <td className="col-num grand-total-value" scope="row">
+                  <td className="col-total grand-total-value" scope="row">
                     ₪{grandTotal.toFixed(2)}
                   </td>
                   <td className="col-action"></td>
