@@ -10,6 +10,14 @@ const LINKS = [
   { href: "#contact", label: "צור קשר" },
 ];
 
+/** למשתמש עסקי (זורה) – רק אזור עסקי, אודות, שירותים, פרויקטים */
+const BUSINESS_LINKS = [
+  { href: "#business-area", label: "אזור עסקי" },
+  { href: "#about", label: "אודות" },
+  { href: "#services", label: "שירותים" },
+  { href: "#projects", label: "פרויקטים" },
+];
+
 const BUSINESS_USER = "zura";
 
 const THEMES = [
@@ -40,20 +48,13 @@ export default function Nav({ onOpenLogin }) {
             ☰
           </button>
           <ul className={`nav-links ${menuOpen ? "is-open" : ""}`}>
-            {LINKS.map(({ href, label }) => (
+            {(user === BUSINESS_USER ? BUSINESS_LINKS : LINKS).map(({ href, label }) => (
               <li key={href}>
                 <a href={href} onClick={() => setMenuOpen(false)}>
                   {label}
                 </a>
               </li>
             ))}
-            {user === BUSINESS_USER && (
-              <li>
-                <a href="#business-area" onClick={() => setMenuOpen(false)}>
-                  אזור עסקי
-                </a>
-              </li>
-            )}
             <li className="nav-auth">
               {user ? (
                 <>

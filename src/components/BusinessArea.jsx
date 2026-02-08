@@ -2,13 +2,27 @@ import React, { useState, useEffect } from "react";
 
 const QUOTES_DRAFT_KEY = "mp-projects-quotes-draft";
 
+const WORK_TYPES = ["גבס", "צבע", "שפכטל", "אחר"];
+const UNITS = ["מ\"ר", "י\"ח", "מ\"א", "מ\"ק", "ריצוף", "אחר"];
+const WORK_PERCENT_OPTIONS = [50, 60, 70, 80, 90, 100];
+
 function loadDraft() {
   try {
     const raw = localStorage.getItem(QUOTES_DRAFT_KEY);
     if (!raw) return [];
     const data = JSON.parse(raw);
     if (!Array.isArray(data)) return [];
-    return data.map((row, i) => ({ ...row, id: row.id || Date.now() + i }));
+    return data.map((row, i) => ({
+      id: row.id || Date.now() + i,
+      workType: row.workType ?? "גבס",
+      workTypeOther: row.workTypeOther ?? "",
+      description: row.description ?? "",
+      unit: row.unit ?? "מ\"ר",
+      quantity: row.quantity ?? 1,
+      workPercent: row.workPercent ?? 100,
+      unitPrice: row.unitPrice ?? "",
+      discount: row.discount ?? "",
+    }));
   } catch {
     return [];
   }
@@ -22,10 +36,36 @@ function saveDraft(rows) {
   }
 }
 
-const emptyRow = () => ({ id: Date.now(), description: "", quantity: 1, unitPrice: "" });
+function emptyRow() {
+  return {
+    id: Date.now(),
+    workType: "גבס",
+    workTypeOther: "",
+    description: "",
+    unit: "מ\"ר",
+    quantity: 1,
+    workPercent: 100,
+    unitPrice: "",
+    discount: "",
+  };
+}
+
+function calcRowTotal(row) {
+  const q = Number(row.quantity) || 0;
+  const p = Number(row.unitPrice) || 0;
+  const pct = Number(row.workPercent) || 100;
+  const disc = Number(row.discount) || 0;
+  const base = q * p * (pct / 100);
+  if (disc <= 0) return base;
+  return base * (1 - disc / 100);
+}
 
 export default function BusinessArea() {
-  const [rows, setRows] = useState(() => loadDraft().length ? loadDraft() : [emptyRow()]);
+  const [rows, setRows] = useState(() => {
+    const draft = loadDraft();
+    if (draft.length) return draft;
+    return [emptyRow()];
+  });
   const [clientName, setClientName] = useState("");
   const [quoteDate, setQuoteDate] = useState(() => new Date().toISOString().slice(0, 10));
 
@@ -45,11 +85,7 @@ export default function BusinessArea() {
     setRows((r) => (r.length <= 1 ? [emptyRow()] : r.filter((row) => row.id !== id)));
   };
 
-  const totals = rows.map((row) => {
-    const q = Number(row.quantity) || 0;
-    const p = Number(row.unitPrice) || 0;
-    return q * p;
-  });
+  const totals = rows.map(calcRowTotal);
   const grandTotal = totals.reduce((a, b) => a + b, 0);
 
   const handlePrint = () => {
@@ -67,6 +103,10 @@ export default function BusinessArea() {
         </p>
 
         <div className="quote-card">
+          <div className="quote-confidential print-only" aria-hidden="true">
+            //סודי// — מסמך פנימי, באישור מנהל העסק
+          </div>
+
           <h3 className="quote-title">הצעת מחיר</h3>
 
           <div className="quote-meta">
@@ -93,20 +133,42 @@ export default function BusinessArea() {
             <table className="quote-table">
               <thead>
                 <tr>
+                  <th className="col-work-type">סוג עבודה</th>
                   <th>תיאור</th>
+                  <th className="col-unit">יחידה</th>
                   <th className="col-num">כמות</th>
+                  <th className="col-num">אחוז עבודה</th>
                   <th className="col-num">מחיר ליחידה (₪)</th>
+                  <th className="col-num">הנחה %</th>
                   <th className="col-num">סה"כ (₪)</th>
                   <th className="col-action"></th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row) => {
-                  const q = Number(row.quantity) || 0;
-                  const p = Number(row.unitPrice) || 0;
-                  const total = q * p;
+                  const total = calcRowTotal(row);
                   return (
                     <tr key={row.id}>
+                      <td className="col-work-type">
+                        <select
+                          value={row.workType}
+                          onChange={(e) => updateRow(row.id, "workType", e.target.value)}
+                          aria-label="סוג עבודה"
+                        >
+                          {WORK_TYPES.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                        {row.workType === "אחר" && (
+                          <input
+                            type="text"
+                            className="work-type-other"
+                            value={row.workTypeOther}
+                            onChange={(e) => updateRow(row.id, "workTypeOther", e.target.value)}
+                            placeholder="פרט"
+                          />
+                        )}
+                      </td>
                       <td>
                         <input
                           type="text"
@@ -115,14 +177,37 @@ export default function BusinessArea() {
                           placeholder="תיאור הפריט"
                         />
                       </td>
+                      <td className="col-unit">
+                        <select
+                          value={row.unit}
+                          onChange={(e) => updateRow(row.id, "unit", e.target.value)}
+                          aria-label="יחידת מידה"
+                        >
+                          {UNITS.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      </td>
                       <td className="col-num">
                         <input
                           type="number"
                           min="0"
-                          step="1"
+                          step="any"
                           value={row.quantity === "" ? "" : row.quantity}
                           onChange={(e) => updateRow(row.id, "quantity", e.target.value)}
+                          aria-label="כמות"
                         />
+                      </td>
+                      <td className="col-num">
+                        <select
+                          value={row.workPercent}
+                          onChange={(e) => updateRow(row.id, "workPercent", e.target.value)}
+                          aria-label="אחוז עבודה"
+                        >
+                          {WORK_PERCENT_OPTIONS.map((n) => (
+                            <option key={n} value={n}>{n}%</option>
+                          ))}
+                        </select>
                       </td>
                       <td className="col-num">
                         <input
@@ -132,6 +217,19 @@ export default function BusinessArea() {
                           value={row.unitPrice}
                           onChange={(e) => updateRow(row.id, "unitPrice", e.target.value)}
                           placeholder="0"
+                          aria-label="מחיר ליחידה"
+                        />
+                      </td>
+                      <td className="col-num">
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          step="1"
+                          value={row.discount}
+                          onChange={(e) => updateRow(row.id, "discount", e.target.value)}
+                          placeholder="0"
+                          aria-label="הנחה באחוזים"
                         />
                       </td>
                       <td className="col-num total-cell">{total.toFixed(2)}</td>
@@ -151,7 +249,7 @@ export default function BusinessArea() {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3} className="grand-total-label">
+                  <td colSpan={7} className="grand-total-label">
                     סה"כ לתשלום
                   </td>
                   <td className="col-num grand-total-value" scope="row">

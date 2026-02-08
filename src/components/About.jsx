@@ -1,41 +1,133 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { getAbout, setAbout } from "../utils/siteContent";
+
+const BUSINESS_USER = "zura";
 
 export default function About() {
+  const { user } = useAuth();
+  const isBusiness = user === BUSINESS_USER;
+  const [editing, setEditing] = useState(false);
+  const [data, setData] = useState(getAbout);
+
+  useEffect(() => {
+    setData(getAbout());
+  }, [editing]);
+
+  const handleSave = () => {
+    setAbout(data);
+    setEditing(false);
+  };
+
+  const handleChange = (field, value) => {
+    setData((d) => ({ ...d, [field]: value }));
+  };
+
+  const handleListChange = (index, value) => {
+    setData((d) => {
+      const list = [...(d.listItems || [])];
+      list[index] = value;
+      return { ...d, listItems: list };
+    });
+  };
+
+  const content = editing ? data : getAbout();
+
   return (
     <section id="about" aria-labelledby="about-title">
-      <h2 id="about-title" className="section-title">
-        אודות
-      </h2>
+      <div className="section-header-row">
+        <h2 id="about-title" className="section-title">
+          אודות
+        </h2>
+        {isBusiness && (
+          <div className="section-actions">
+            {editing ? (
+              <>
+                <button type="button" className="btn btn-primary btn-sm" onClick={handleSave}>
+                  שמור
+                </button>
+                <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(false)}>
+                  ביטול
+                </button>
+              </>
+            ) : (
+              <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(true)}>
+                עריכה
+              </button>
+            )}
+          </div>
+        )}
+      </div>
       <p className="section-subtitle">מי אנחנו ואיך אנחנו עובדים</p>
       <div className="about-content">
         <div className="about-text">
-          <p>
-            <strong>זורה פפיסמדוב</strong> – בעל העסק, עם 7 שנות ניסיון בתחום השיפוצים והבנייה.
-            אנחנו מתמחים בשיפוצים כלליים, עבודות גבס, ריצוף, איטום, אינסטלציה וחשמל –
-            משלב התכנון ועד לסיום העבודה.
-          </p>
-          <p>
-            התהליך אצלנו פשוט וברור:{" "}
-            <strong>פנייה → פגישה בשטח → הצעת מחיר גמישה</strong> בהתאם לצרכים שלכם. המחיר
-            הסופי נקבע ביחד, בשקיפות מלאה.
-          </p>
-          <ul className="about-list">
-            <li>עבודה מסודרת ואמינה, עם דגש על איכות החומרים והביצוע</li>
-            <li>שירות אישי וליווי צמוד לאורך הפרויקט</li>
-            <li>אזור פעילות: ראשון לציון וגוש דן</li>
-          </ul>
+          {isBusiness && editing ? (
+            <>
+              <label className="edit-label">פסקה ראשונה</label>
+              <textarea
+                value={content.intro1}
+                onChange={(e) => handleChange("intro1", e.target.value)}
+                rows={3}
+                className="edit-textarea"
+              />
+              <label className="edit-label">פסקה שנייה</label>
+              <textarea
+                value={content.intro2}
+                onChange={(e) => handleChange("intro2", e.target.value)}
+                rows={3}
+                className="edit-textarea"
+              />
+              <label className="edit-label">נקודות (שורה לכל נקודה)</label>
+              {(content.listItems || []).map((item, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  value={item}
+                  onChange={(e) => handleListChange(i, e.target.value)}
+                  className="edit-input"
+                  placeholder={`נקודה ${i + 1}`}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              <p>{content.intro1}</p>
+              <p>{content.intro2}</p>
+              <ul className="about-list">
+                {(content.listItems || []).map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
         <div className="about-visual">
-          <h3>שעות פעילות</h3>
-          <p>
-            ימים א׳–ה׳: 07:00–18:00
-            <br />
-            יום ו׳: 07:00–13:30
-            <br />
-            שבת: אין פעילות
-          </p>
-          <h3 style={{ marginTop: "1.25rem" }}>כתובת</h3>
-          <p>גולדברג הנדבן 14, ראשון לציון</p>
+          {isBusiness && editing ? (
+            <>
+              <h3>שעות פעילות</h3>
+              <textarea
+                value={content.hours}
+                onChange={(e) => handleChange("hours", e.target.value)}
+                rows={4}
+                className="edit-textarea"
+                placeholder="שורה לכל שורה"
+              />
+              <h3 style={{ marginTop: "1.25rem" }}>כתובת</h3>
+              <input
+                type="text"
+                value={content.address}
+                onChange={(e) => handleChange("address", e.target.value)}
+                className="edit-input"
+              />
+            </>
+          ) : (
+            <>
+              <h3>שעות פעילות</h3>
+              <p style={{ whiteSpace: "pre-line" }}>{content.hours}</p>
+              <h3 style={{ marginTop: "1.25rem" }}>כתובת</h3>
+              <p>{content.address}</p>
+            </>
+          )}
         </div>
       </div>
     </section>
