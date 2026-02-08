@@ -1617,7 +1617,7 @@ section {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm;
+    margin: 12mm;
   }
 
   .nav,
@@ -1643,6 +1643,12 @@ section {
     background: #fff;
     border: none;
     padding: 0;
+    max-width: 100%;
+  }
+
+  .business-area-inner {
+    max-width: 100% !important;
+    padding: 0 0.5rem !important;
   }
 
   .business-area .section-subtitle,
@@ -1662,12 +1668,41 @@ section {
   .quote-card {
     box-shadow: none;
     border: 1px solid #333;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  /* טבלה בהדפסה – נכנסת ברוחב הדף, בלי חיתוך */
+  .quote-table-wrap {
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .quote-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed;
+    font-size: 9pt;
+  }
+
+  .quote-table thead th,
+  .quote-table tbody td,
+  .quote-table tfoot td {
+    padding: 4pt 5pt;
+    overflow: visible;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .quote-table .col-work-type {
+    width: 12%;
   }
 
   .quote-table .col-description {
-    min-width: 120px;
-    width: 22%;
-    max-width: 200px;
+    width: 20%;
+    min-width: 0 !important;
+    max-width: none !important;
     overflow: visible;
   }
 
@@ -1680,6 +1715,38 @@ section {
     resize: none;
     white-space: pre-wrap;
     word-wrap: break-word;
+    word-break: break-word;
+    font-size: inherit;
+  }
+
+  .quote-table .col-unit {
+    width: 8%;
+  }
+
+  .quote-table .col-qty {
+    width: 7%;
+  }
+
+  .quote-table .col-pct {
+    width: 10%;
+  }
+
+  .quote-table .col-price {
+    width: 12%;
+  }
+
+  .quote-table .col-discount {
+    width: 8%;
+  }
+
+  .quote-table .col-total {
+    width: 12%;
+  }
+
+  .quote-table .col-action {
+    width: 4% !important;
+    min-width: 0 !important;
+    padding: 2pt !important;
   }
 
   .quote-table .col-description .desc-char-count {
@@ -1690,19 +1757,32 @@ section {
     display: table-footer-group;
   }
 
-  .quote-table tfoot td {
-    color: #000;
+  .quote-table tfoot tr {
+    border-top: 2px solid #000;
   }
 
-  /* סה"כ לתשלום – מוצג בהדפסה בשחור, תמיד גלוי */
-  .quote-table tfoot .grand-total-value,
+  .quote-table tfoot td {
+    color: #000 !important;
+    font-weight: 700;
+  }
+
+  /* סה"כ לתשלום – מוצג בהדפסה, תמיד גלוי */
+  .quote-table tfoot td.grand-total-value,
   .quote-table .grand-total-value {
     display: table-cell !important;
     visibility: visible !important;
+    opacity: 1 !important;
     color: #000 !important;
-    font-weight: 700;
+    font-weight: 700 !important;
+    font-size: 10pt !important;
+    min-width: 70px !important;
+    border: 1px solid #333 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .quote-table tfoot .grand-total-label {
+    border: 1px solid #333;
   }
 
   body {
