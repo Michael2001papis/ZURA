@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import Nav from "./components/Nav";
 import LoginModal from "./components/LoginModal";
+import BusinessArea from "./components/BusinessArea";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
@@ -19,9 +20,13 @@ import ContactOverlay, {
 import ScrollToTop from "./components/ScrollToTop";
 import SkipToContent from "./components/SkipToContent";
 
+const BUSINESS_USER = "zura";
+
 function AppContent() {
+  const { user } = useAuth();
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const isBusiness = user === BUSINESS_USER;
 
   useEffect(() => {
     const count = getVisitCount();
@@ -66,6 +71,7 @@ function AppContent() {
         <Projects />
         <Testimonials />
         <Contact />
+        {isBusiness && <BusinessArea />}
       </main>
       <Footer />
       <ContactOverlay open={overlayOpen} onClose={closeOverlay} />

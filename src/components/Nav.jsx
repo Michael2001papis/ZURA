@@ -10,6 +10,8 @@ const LINKS = [
   { href: "#contact", label: "צור קשר" },
 ];
 
+const BUSINESS_USER = "zura";
+
 const THEMES = [
   { id: "light", label: "מצב בהיר", icon: "☀️" },
   { id: "dark", label: "מצב כהה", icon: "🌙" },
@@ -45,6 +47,13 @@ export default function Nav({ onOpenLogin }) {
                 </a>
               </li>
             ))}
+            {user === BUSINESS_USER && (
+              <li>
+                <a href="#business-area" onClick={() => setMenuOpen(false)}>
+                  אזור עסקי
+                </a>
+              </li>
+            )}
             <li className="nav-auth">
               {user ? (
                 <>
@@ -68,8 +77,9 @@ export default function Nav({ onOpenLogin }) {
                     onOpenLogin?.();
                     setMenuOpen(false);
                   }}
+                  title="כניסה לבעל העסק בלבד"
                 >
-                  כניסה
+                  כניסה (בעל העסק)
                 </button>
               )}
             </li>

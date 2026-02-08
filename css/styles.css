@@ -10,6 +10,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -20,6 +21,9 @@ body {
   line-height: 1.6;
   direction: rtl;
   min-height: 100vh;
+  overflow-x: hidden;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* ----- ניווט ----- */
@@ -82,6 +86,8 @@ body {
 .theme-toggle button {
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -89,6 +95,7 @@ body {
   color: var(--text-secondary);
   font-size: 1rem;
   transition: background 0.2s, color 0.2s;
+  touch-action: manipulation;
 }
 
 .theme-toggle button:hover {
@@ -174,6 +181,7 @@ section {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.9rem 1.6rem;
   border-radius: 10px;
@@ -184,6 +192,7 @@ section {
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   font-family: inherit;
+  touch-action: manipulation;
 }
 
 .btn-primary {
@@ -496,6 +505,9 @@ section {
 
 .contact-overlay.is-open {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .contact-overlay .contact-form {
@@ -525,7 +537,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  overflow-y: auto;
 }
 
 .login-modal {
@@ -627,7 +640,237 @@ section {
   color: var(--accent);
 }
 
-/* ----- רספונסיב ----- */
+/* ----- רספונסיב: טלפונים קטנים (320px–480px) ----- */
+@media (max-width: 480px) {
+  .nav {
+    padding: 0.75rem 1rem;
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .nav-inner {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .theme-toggle button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menu-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+
+  section {
+    padding: 2rem 1rem;
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero {
+    min-height: 70vh;
+    padding: 5rem 1rem 3rem;
+    padding-top: max(5rem, calc(60px + env(safe-area-inset-top)));
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .about-visual {
+    padding: 1.25rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-card {
+    padding: 1.25rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .contact-form,
+  .contact-form-wrap {
+    padding: 1.25rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px; /* מונע זום אוטומטי באייפון */
+    min-height: 48px;
+  }
+
+  .contact-form textarea {
+    min-height: 100px;
+  }
+
+  .contact-form .btn {
+    min-height: 48px;
+  }
+
+  .footer {
+    padding: 1.5rem 1rem;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .scroll-to-top {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: max(1rem, env(safe-area-inset-left));
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .quote-card {
+    padding: 1rem;
+  }
+
+  .quote-table {
+    font-size: 0.85rem;
+    min-width: 320px;
+  }
+
+  .quote-table th,
+  .quote-table td {
+    padding: 0.5rem 0.35rem;
+  }
+
+  .quote-table .col-num {
+    width: 72px;
+  }
+
+  .quote-table input {
+    padding: 0.5rem 0.35rem;
+    font-size: 16px;
+    min-width: 0;
+  }
+
+  .quote-meta {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .quote-meta input {
+    min-width: 100%;
+  }
+
+  .quote-actions {
+    flex-direction: column;
+  }
+
+  .quote-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .login-modal,
+  .contact-overlay .contact-form {
+    margin: 0.5rem;
+    padding: 1.25rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .nav-login,
+  .nav-logout {
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* ----- רספונסיב: טלפונים (480px–768px) ----- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .nav {
+    padding: 0.85rem 1.25rem;
+  }
+
+  section {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .hero {
+    min-height: 72vh;
+    padding: 5.5rem 1.25rem 3.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero-cta {
+    gap: 0.75rem;
+  }
+
+  .hero-cta .btn {
+    min-height: 48px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  .quote-table {
+    min-width: 380px;
+  }
+
+  .scroll-to-top {
+    bottom: 1.25rem;
+    left: 1.25rem;
+  }
+}
+
+/* ----- רספונסיב: מובייל – תפריט והמבורגר ----- */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -642,12 +885,49 @@ section {
     flex-direction: column;
     background: var(--bg-primary);
     padding: 1rem;
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1rem, env(safe-area-inset-left));
     border-bottom: 1px solid var(--border);
+    gap: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .nav-links.is-open li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-links.is-open li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links.is-open a,
+  .nav-links.is-open .nav-auth {
+    display: block;
+    padding: 0.85rem 0.5rem;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .nav-links.is-open .nav-auth {
+    flex-wrap: wrap;
     gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .nav-links.is-open .nav-login,
+  .nav-links.is-open .nav-logout {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
   }
 
   .menu-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .hero {
@@ -657,6 +937,61 @@ section {
 
   section {
     padding: 3rem 1rem;
+  }
+}
+
+/* ----- רספונסיב: טאבלט / אייפד (768px–1024px) ----- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .nav {
+    padding: 1rem 1.5rem;
+  }
+
+  section {
+    padding: 3.5rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .hero {
+    min-height: 80vh;
+    padding: 5rem 1.5rem 4rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .about-content {
+    gap: 1.5rem;
+  }
+
+  .about-visual {
+    padding: 1.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .contact-wrap {
+    gap: 2rem;
+  }
+
+  .business-area-inner {
+    padding: 0 1rem;
+  }
+
+  .quote-card {
+    padding: 1.5rem;
+  }
+
+  .quote-table .col-num {
+    width: 90px;
   }
 }
 
@@ -718,9 +1053,199 @@ section {
   border-radius: 14px;
   max-width: 480px;
   margin: 0 auto;
+  word-break: break-word;
 }
 .testimonials-placeholder p {
   margin: 0.5rem 0;
+}
+
+/* ----- אזור עסקי + הצעת מחיר ----- */
+.business-area {
+  background: var(--bg-secondary);
+  border-top: 2px solid var(--accent);
+}
+
+.business-area-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.quote-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-top: 1rem;
+}
+
+.quote-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.quote-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.quote-meta label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.quote-meta input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 160px;
+}
+
+.quote-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.quote-table th,
+.quote-table td {
+  padding: 0.6rem 0.5rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+
+.quote-table th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+.quote-table .col-num {
+  width: 100px;
+  text-align: center;
+}
+
+.quote-table .col-action {
+  width: 44px;
+  text-align: center;
+}
+
+.quote-table input {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.quote-table .total-cell {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.quote-table tfoot td {
+  border-bottom: none;
+  padding-top: 0.75rem;
+  font-weight: 700;
+}
+
+.grand-total-label {
+  text-align: left;
+  font-size: 1.05rem;
+}
+
+.grand-total-value {
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.btn-remove-row {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.2rem;
+  line-height: 1;
+}
+
+.btn-remove-row:hover {
+  color: #c0392b;
+}
+
+.quote-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.business-hint {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ----- הדפסה – רק הצעת המחיר ----- */
+@media print {
+  .nav,
+  .footer,
+  .scroll-to-top,
+  .skip-to-content,
+  .contact-overlay,
+  .login-overlay,
+  .theme-toggle,
+  .menu-btn,
+  .hero,
+  .about-content,
+  .services-grid,
+  .projects-section .projects-grid,
+  .testimonials-section,
+  .contact-wrap,
+  .contact-overlay,
+  main section:not(.business-area) {
+    display: none !important;
+  }
+
+  .business-area {
+    background: #fff;
+    border: none;
+    padding: 0;
+  }
+
+  .business-area .section-subtitle,
+  .business-area .business-hint,
+  .quote-actions {
+    display: none !important;
+  }
+
+  .quote-card {
+    box-shadow: none;
+    border: 1px solid #333;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
 }
 
 /* ----- כניסה לסקשנים (אנימציה קלה) ----- */
