@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getContactDraft, setContactDraft } from "../utils/userMemory";
 import {
+  CONTACT_NAME,
   CONTACT_EMAIL,
   CONTACT_PHONE,
   CONTACT_PHONE_TEL,
   WHATSAPP_URL,
+  CONTACT_ADDRESS,
   FORMSPREE_FORM_ID,
 } from "../utils/constants";
 
@@ -79,7 +81,7 @@ export default function Contact() {
           <h3>פרטי התקשרות</h3>
           <ul className="contact-list">
             <li>
-              <strong>שם:</strong> זורה פפיסמדוב
+              <strong>שם:</strong> {CONTACT_NAME}
             </li>
             <li>
               <strong>טלפון:</strong>{" "}
@@ -96,11 +98,11 @@ export default function Contact() {
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </li>
             <li>
-              <strong>כתובת:</strong> גולדברג הנדבן 14, ראשון לציון
+              <strong>כתובת:</strong> {CONTACT_ADDRESS}
             </li>
           </ul>
-          <h3 style={{ marginTop: "1.5rem" }}>שעות פעילות</h3>
-          <p style={{ color: "var(--text-secondary)", margin: 0 }}>
+          <h3 className="contact-details-h3">שעות פעילות</h3>
+          <p className="contact-hours-text">
             ימים א׳–ה׳: 07:00–18:00 | יום ו׳: 07:00–13:30 | שבת: אין פעילות
           </p>
         </div>

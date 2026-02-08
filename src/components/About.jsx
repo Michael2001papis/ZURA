@@ -110,7 +110,7 @@ export default function About() {
                 className="edit-textarea"
                 placeholder="שורה לכל שורה"
               />
-              <h3 style={{ marginTop: "1.25rem" }}>כתובת</h3>
+              <h3 className="about-visual-h3-secondary">כתובת</h3>
               <input
                 type="text"
                 value={content.address}
@@ -121,8 +121,8 @@ export default function About() {
           ) : (
             <>
               <h3>שעות פעילות</h3>
-              <p style={{ whiteSpace: "pre-line" }}>{content.hours}</p>
-              <h3 style={{ marginTop: "1.25rem" }}>כתובת</h3>
+              <p className="about-hours-pre">{content.hours}</p>
+              <h3 className="about-visual-h3-secondary">כתובת</h3>
               <p>{content.address}</p>
             </>
           )}

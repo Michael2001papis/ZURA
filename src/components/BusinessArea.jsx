@@ -417,7 +417,7 @@ export default function BusinessArea() {
                   <td colSpan={7} className="grand-total-label">
                     סה"כ לתשלום
                   </td>
-                  <td className="col-total grand-total-value" scope="row">
+                  <td className="col-total grand-total-value">
                     ₪{grandTotal.toFixed(2)}
                   </td>
                   <td className="col-action"></td>

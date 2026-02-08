@@ -65,7 +65,7 @@ export default function ContactOverlay({ open, onClose }) {
         >
           ×
         </button>
-        <h3 style={{ marginTop: 0 }}>רוצים הצעת מחיר? השאירו פרטים</h3>
+        <h3 className="contact-overlay-title">רוצים הצעת מחיר? השאירו פרטים</h3>
         <form onSubmit={handleSubmit}>
           <label htmlFor="overlay-name">שם</label>
           <input

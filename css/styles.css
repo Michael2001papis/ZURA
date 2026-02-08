@@ -365,6 +365,14 @@ section {
   font-size: 0.95rem;
 }
 
+.about-visual-h3-secondary {
+  margin-top: 1.25rem;
+}
+
+.about-hours-pre {
+  white-space: pre-line;
+}
+
 /* ----- שירותים ----- */
 .services-grid {
   display: grid;
@@ -496,6 +504,19 @@ section {
   text-decoration: underline;
 }
 
+.contact-details-h3 {
+  margin-top: 1.5rem;
+}
+
+.contact-details-h3:first-child {
+  margin-top: 0;
+}
+
+.contact-hours-text {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 .contact-form {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -624,6 +645,10 @@ section {
 .contact-overlay .contact-form {
   max-width: 420px;
   width: 100%;
+}
+
+.contact-overlay-title {
+  margin-top: 0;
   position: relative;
 }
 
@@ -1227,6 +1252,11 @@ section {
   margin-bottom: 0.5rem;
 }
 
+.testimonials-actions {
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
 .testimonials-placeholder {
   text-align: center;
   padding: 2rem;
@@ -1585,6 +1615,11 @@ section {
 
 /* ----- הדפסה – רק הצעת המחיר ----- */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm;
+  }
+
   .nav,
   .footer,
   .scroll-to-top,
@@ -1651,9 +1686,23 @@ section {
     display: none;
   }
 
-  /* סה"כ לתשלום – מוצג בהדפסה (תיקון צבע) */
+  .quote-table tfoot {
+    display: table-footer-group;
+  }
+
+  .quote-table tfoot td {
+    color: #000;
+  }
+
+  /* סה"כ לתשלום – מוצג בהדפסה בשחור, תמיד גלוי */
+  .quote-table tfoot .grand-total-value,
   .quote-table .grand-total-value {
+    display: table-cell !important;
+    visibility: visible !important;
     color: #000 !important;
+    font-weight: 700;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   body {

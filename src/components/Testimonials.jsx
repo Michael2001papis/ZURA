@@ -45,7 +45,7 @@ export default function Testimonials() {
       <p className="section-subtitle">מ־לקוחות מרוצים</p>
       <div className="testimonials-inner">
         {isBusiness && (
-          <div className="section-actions" style={{ marginBottom: "1rem", justifyContent: "center" }}>
+          <div className="section-actions testimonials-actions">
             {editing ? (
               <>
                 <button type="button" className="btn btn-primary btn-sm" onClick={handleSave}>
@@ -96,7 +96,7 @@ export default function Testimonials() {
                   </>
                 ) : (
                   <>
-                    <p className="testimonial-text">"{item.text}"</p>
+                    <p className="testimonial-text">«{item.text}»</p>
                     <cite className="testimonial-cite">— {item.name}</cite>
                   </>
                 )}
