@@ -21,7 +21,8 @@ const BUSINESS_LINKS = [
 const THEMES = [
   { id: "light", label: "מצב בהיר", icon: "☀️" },
   { id: "dark", label: "מצב כהה", icon: "🌙" },
-  { id: "accessibility", label: "נגישות", icon: "♿" },
+  { id: "accessibility-a", label: "נגישות א (תכלת)", icon: "♿" },
+  { id: "accessibility-b", label: "נגישות ב (ירוק)", icon: "♿" },
 ];
 
 export default function Nav({ onOpenLogin }) {

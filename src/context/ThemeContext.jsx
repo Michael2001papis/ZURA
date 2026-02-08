@@ -5,7 +5,11 @@ const THEME_KEY = "mp-projects-theme";
 const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => localStorage.getItem(THEME_KEY) || "light");
+  const [theme, setThemeState] = useState(() => {
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === "accessibility") return "accessibility-a";
+    return stored || "light";
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);

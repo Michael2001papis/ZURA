@@ -29,16 +29,30 @@
   --shadow-strong: rgba(0, 0, 0, 0.5);
 }
 
-/* ========== נגישות / כבדי ראייה ========== */
-[data-theme="accessibility"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #ffff00;
-  --bg-card: #ffffff;
+/* ========== נגישות א – תכלת (כותרת ניווט + רקע) ========== */
+[data-theme="accessibility-a"] {
+  --bg-primary: #B0C4DE;
+  --bg-secondary: #B0C4DE;
+  --bg-card: #B0C4DE;
   --text-primary: #000000;
   --text-secondary: #000000;
-  --accent: #00ff00;
-  --accent-soft: #90ee90;
+  --accent: #0645ad;
+  --accent-soft: #0645ad;
   --border: #000000;
-  --shadow: rgba(0, 0, 0, 0.2);
-  --shadow-strong: rgba(0, 0, 0, 0.4);
+  --shadow: rgba(0, 0, 0, 0.15);
+  --shadow-strong: rgba(0, 0, 0, 0.25);
+}
+
+/* ========== נגישות ב – ירוק (כותרת ניווט + רקע) ========== */
+[data-theme="accessibility-b"] {
+  --bg-primary: #9BCB65;
+  --bg-secondary: #9BCB65;
+  --bg-card: #9BCB65;
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --accent: #0645ad;
+  --accent-soft: #0645ad;
+  --border: #000000;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --shadow-strong: rgba(0, 0, 0, 0.25);
 }
