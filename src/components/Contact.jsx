@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getContactDraft, setContactDraft } from "../utils/userMemory";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "../utils/constants";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_TEL,
+  WHATSAPP_URL,
+  FORMSPREE_FORM_ID,
+} from "../utils/constants";
 
 function buildMailto(body) {
   return `mailto:${CONTACT_EMAIL}?subject=פנייה מאתר מ.פ. פרויקטים&body=${encodeURIComponent(body)}`;
@@ -12,6 +18,7 @@ export default function Contact() {
   const [phone, setPhone] = useState(draft.phone);
   const [email, setEmail] = useState(draft.email);
   const [message, setMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState("idle"); // idle | sending | success | error
   const saveTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -24,9 +31,34 @@ export default function Contact() {
     };
   }, [name, phone, email]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    window.location.href = buildMailto(`שם: ${name}\nטלפון: ${phone}\n\nהודעה:\n${message}`);
+    if (FORMSPREE_FORM_ID) {
+      setSubmitStatus("sending");
+      try {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("phone", phone);
+        formData.append("email", email || "(לא צוין)");
+        formData.append("message", message);
+        formData.append("_subject", "פנייה מאתר מ.פ. פרויקטים");
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+          method: "POST",
+          body: formData,
+        });
+        if (res.ok) {
+          setSubmitStatus("success");
+          setMessage("");
+          setTimeout(() => setSubmitStatus("idle"), 5000);
+        } else {
+          setSubmitStatus("error");
+        }
+      } catch {
+        setSubmitStatus("error");
+      }
+    } else {
+      window.location.href = buildMailto(`שם: ${name}\nטלפון: ${phone}\n\nהודעה:\n${message}`);
+    }
   };
 
   const hasStored = draft.name || draft.phone || draft.email;
@@ -112,9 +144,23 @@ export default function Contact() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary">
-              שליחת פנייה
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={submitStatus === "sending"}
+            >
+              {submitStatus === "sending" ? "שולח..." : "שליחת פנייה"}
             </button>
+            {submitStatus === "success" && (
+              <p className="contact-success" role="status">
+                הפנייה נשלחה בהצלחה. נחזור אליך בהקדם.
+              </p>
+            )}
+            {submitStatus === "error" && (
+              <p className="contact-error" role="alert">
+                שליחת הפנייה נכשלה. נסו שוב או צרו קשר בוואטסאפ.
+              </p>
+            )}
           </form>
           <p className="contact-saved-hint">הפרטים נשמרים אוטומטית להבא.</p>
         </div>

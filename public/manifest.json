@@ -1,0 +1,11 @@
+{
+  "name": "מ.פ. פרויקטים – שיפוצים ועבודות בניין",
+  "short_name": "מ.פ. פרויקטים",
+  "description": "שיפוצים כלליים, גבס, ריצוף, איטום – ראשון לציון וגוש דן",
+  "start_url": "/",
+  "display": "standalone",
+  "lang": "he",
+  "dir": "rtl",
+  "theme_color": "#faf8f5",
+  "background_color": "#faf8f5"
+}

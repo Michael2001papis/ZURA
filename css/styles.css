@@ -420,14 +420,22 @@ section {
   box-shadow: 0 10px 30px var(--shadow);
 }
 
-.project-placeholder {
+.project-placeholder,
+.project-image {
   aspect-ratio: 4/3;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.project-placeholder {
   background: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
   font-size: 0.95rem;
+  margin: 0;
 }
 
 .project-info {
@@ -542,6 +550,17 @@ section {
   font-weight: 500;
   margin: -0.5rem 0 1rem;
   font-size: 0.95rem;
+}
+
+.contact-success {
+  margin: 0.75rem 0 0;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.contact-error {
+  margin: 0.75rem 0 0;
+  color: #c0392b;
 }
 
 .contact-saved-hint {
@@ -1172,6 +1191,42 @@ section {
 .testimonials-section {
   background: var(--bg-secondary);
 }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.testimonial-card {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-style: normal;
+}
+
+.testimonial-text {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.testimonial-cite {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
+.testimonial-edit-name {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
 .testimonials-placeholder {
   text-align: center;
   padding: 2rem;
@@ -1482,11 +1537,44 @@ section {
   color: #c0392b;
 }
 
+.quote-selector-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.quote-selector-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.quote-select-select {
+  min-width: 180px;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
 .quote-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1rem;
+}
+
+.quote-pdf-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 .business-hint {
@@ -1495,7 +1583,7 @@ section {
   color: var(--text-secondary);
 }
 
-/* ----- הדפסה – הצעת מחיר מקצועית ----- */
+/* ----- הדפסה – רק הצעת המחיר ----- */
 @media print {
   .nav,
   .footer,
@@ -1522,138 +1610,23 @@ section {
     padding: 0;
   }
 
-  .business-area .section-title {
-    font-size: 14pt;
-    color: #000;
-  }
-
   .business-area .section-subtitle,
   .business-area .business-hint,
-  .quote-actions {
+  .quote-actions,
+  .quote-selector-bar,
+  .quote-pdf-hint {
     display: none !important;
   }
 
   .quote-confidential.print-only {
     display: block !important;
-    font-size: 11pt;
+    font-size: 12pt;
     margin-bottom: 8px;
-    color: #000;
   }
 
   .quote-card {
     box-shadow: none;
-    border: 1px solid #000;
-    border-radius: 0;
-    padding: 12pt;
-  }
-
-  .quote-title {
-    font-size: 12pt;
-    color: #000;
-  }
-
-  .quote-meta label,
-  .quote-meta input {
-    color: #000;
-  }
-
-  .quote-meta input {
     border: 1px solid #333;
-    border-radius: 0;
-    background: #fff;
-  }
-
-  /* טבלה – מראה מסמך עסקי */
-  .quote-table-wrap {
-    border: 1px solid #000;
-    border-radius: 0;
-  }
-
-  .quote-table {
-    font-size: 10pt;
-  }
-
-  .quote-table thead {
-    display: table-header-group;
-  }
-
-  .quote-table thead th {
-    background: #f0f0f0 !important;
-    color: #000 !important;
-    border: 1px solid #333;
-    padding: 6pt 8pt;
-    font-weight: 700;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .quote-table tbody tr {
-    break-inside: auto;
-  }
-
-  .quote-table tbody td {
-    border: 1px solid #333;
-    padding: 5pt 8pt;
-    color: #000;
-  }
-
-  .quote-table tfoot {
-    display: table-footer-group;
-  }
-
-  .quote-table tfoot tr {
-    border-top: 2px solid #000;
-    background: #f0f0f0 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .quote-table tfoot td {
-    border: 1px solid #333;
-    color: #000 !important;
-    padding: 8pt;
-  }
-
-  /* סה"כ לתשלום – מוצג תמיד בשחור */
-  .quote-table .grand-total-value {
-    display: table-cell !important;
-    visibility: visible !important;
-    color: #000 !important;
-    font-size: 12pt;
-    font-weight: 700;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .quote-table tfoot .grand-total-label {
-    color: #000;
-  }
-
-  /* שדות בטבלה – ללא פינות מעוגלות, מראה מסמך */
-  .quote-table input,
-  .quote-table select,
-  .quote-table .work-type-other {
-    border: 1px solid #333 !important;
-    border-radius: 0 !important;
-    background: #fff !important;
-    color: #000 !important;
-    box-shadow: none !important;
-  }
-
-  /* הסרת חץ הדרופדאון בהדפסה – מניעת חיתוך עם הטקסט */
-  .quote-table select {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    padding-left: 8pt !important;
-    padding-right: 8pt !important;
-    background: #fff !important;
-  }
-
-  /* יחידה – רוחב מספיק כדי שלא ייחתך */
-  .quote-table .col-unit {
-    min-width: 90px !important;
-    width: 11% !important;
   }
 
   .quote-table .col-description {
@@ -1664,30 +1637,23 @@ section {
   }
 
   .quote-table .col-description textarea {
-    border: 1px solid #333 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    border: none;
+    background: transparent;
     min-height: auto;
     height: auto;
     overflow: visible;
     resize: none;
     white-space: pre-wrap;
     word-wrap: break-word;
-    color: #000;
   }
 
   .quote-table .col-description .desc-char-count {
     display: none;
   }
 
-  .quote-table .total-cell {
+  /* סה"כ לתשלום – מוצג בהדפסה (תיקון צבע) */
+  .quote-table .grand-total-value {
     color: #000 !important;
-  }
-
-  /* הסתרת עמודת הפעולות בהדפסה */
-  .quote-table th.col-action,
-  .quote-table td.col-action {
-    display: none !important;
   }
 
   body {

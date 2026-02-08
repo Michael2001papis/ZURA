@@ -5,6 +5,7 @@
 const KEY_ABOUT = "mp-projects-content-about";
 const KEY_SERVICES = "mp-projects-content-services";
 const KEY_PROJECTS = "mp-projects-content-projects";
+const KEY_TESTIMONIALS = "mp-projects-content-testimonials";
 
 const DEFAULT_ABOUT = {
   intro1: "זורה פפיסמדוב – בעל העסק, עם 7 שנות ניסיון בתחום השיפוצים והבנייה. אנחנו מתמחים בשיפוצים כלליים, עבודות גבס, ריצוף, איטום, אינסטלציה וחשמל – משלב התכנון ועד לסיום העבודה.",
@@ -28,9 +29,15 @@ const DEFAULT_SERVICES = [
 ];
 
 const DEFAULT_PROJECTS = [
-  { id: "1", title: "שיפוץ דירה", location: "ראשון לציון" },
-  { id: "2", title: "עבודות גבס וריצוף", location: "גוש דן" },
-  { id: "3", title: "איטום וריצוף מרפסת", location: "ראשון לציון" },
+  { id: "1", title: "שיפוץ דירה", location: "ראשון לציון", image: "" },
+  { id: "2", title: "עבודות גבס וריצוף", location: "גוש דן", image: "" },
+  { id: "3", title: "איטום וריצוף מרפסת", location: "ראשון לציון", image: "" },
+];
+
+const DEFAULT_TESTIMONIALS = [
+  { id: "1", name: "דוד ל.", text: "עבודה מקצועית ומסודרת. זורה והצוות הגיעו בזמן וסיימו בדיוק כמו שהבטיחו. ממליץ בחום." },
+  { id: "2", name: "מיכל ר.", text: "שיפצנו את המרפסת – איטום וריצוף. המחיר היה הוגן והתוצאה מעולה. נשמח להזמין שוב." },
+  { id: "3", name: "יוסי כ.", text: "תיקון אינסטלציה דחוף – טיפלו מהר ובמקצועיות. תודה על השירות." },
 ];
 
 function load(key, defaultVal) {
@@ -73,4 +80,12 @@ export function getProjects() {
 
 export function setProjects(data) {
   save(KEY_PROJECTS, data);
+}
+
+export function getTestimonials() {
+  return load(KEY_TESTIMONIALS, DEFAULT_TESTIMONIALS);
+}
+
+export function setTestimonials(data) {
+  save(KEY_TESTIMONIALS, data);
 }

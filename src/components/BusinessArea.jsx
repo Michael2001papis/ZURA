@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from "react";
 
 const QUOTES_DRAFT_KEY = "mp-projects-quotes-draft";
+const QUOTES_DRAFT_META_KEY = "mp-projects-quotes-draft-meta";
+const QUOTES_SAVED_KEY = "mp-projects-quotes-saved";
 
 const WORK_TYPES = ["גבס", "צבע", "שפכטל", "אחר"];
 const UNITS = ["מ\"ר", "י\"ח", "מ\"א", "מ\"ק", "ריצוף", "אחר"];
 const WORK_PERCENT_OPTIONS = [50, 60, 70, 80, 90, 100];
 
+function normalizeRows(data) {
+  if (!Array.isArray(data)) return [];
+  return data.map((row, i) => ({
+    id: row.id || Date.now() + i,
+    workType: row.workType ?? "גבס",
+    workTypeOther: row.workTypeOther ?? "",
+    description: row.description ?? "",
+    unit: row.unit ?? "מ\"ר",
+    quantity: row.quantity ?? 1,
+    workPercent: row.workPercent ?? 100,
+    unitPrice: row.unitPrice ?? "",
+    discount: row.discount ?? "",
+  }));
+}
+
 function loadDraft() {
   try {
     const raw = localStorage.getItem(QUOTES_DRAFT_KEY);
     if (!raw) return [];
-    const data = JSON.parse(raw);
-    if (!Array.isArray(data)) return [];
-    return data.map((row, i) => ({
-      id: row.id || Date.now() + i,
-      workType: row.workType ?? "גבס",
-      workTypeOther: row.workTypeOther ?? "",
-      description: row.description ?? "",
-      unit: row.unit ?? "מ\"ר",
-      quantity: row.quantity ?? 1,
-      workPercent: row.workPercent ?? 100,
-      unitPrice: row.unitPrice ?? "",
-      discount: row.discount ?? "",
-    }));
+    return normalizeRows(JSON.parse(raw));
   } catch {
     return [];
   }
@@ -31,6 +36,47 @@ function loadDraft() {
 function saveDraft(rows) {
   try {
     localStorage.setItem(QUOTES_DRAFT_KEY, JSON.stringify(rows));
+  } catch {
+    // ignore
+  }
+}
+
+function loadDraftMeta() {
+  try {
+    const raw = localStorage.getItem(QUOTES_DRAFT_META_KEY);
+    if (!raw) return { clientName: "", quoteDate: new Date().toISOString().slice(0, 10) };
+    const d = JSON.parse(raw);
+    return {
+      clientName: d.clientName ?? "",
+      quoteDate: d.quoteDate ?? new Date().toISOString().slice(0, 10),
+    };
+  } catch {
+    return { clientName: "", quoteDate: new Date().toISOString().slice(0, 10) };
+  }
+}
+
+function saveDraftMeta(meta) {
+  try {
+    localStorage.setItem(QUOTES_DRAFT_META_KEY, JSON.stringify(meta));
+  } catch {
+    // ignore
+  }
+}
+
+function getSavedQuotes() {
+  try {
+    const raw = localStorage.getItem(QUOTES_SAVED_KEY);
+    if (!raw) return [];
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function setSavedQuotes(list) {
+  try {
+    localStorage.setItem(QUOTES_SAVED_KEY, JSON.stringify(list));
   } catch {
     // ignore
   }
@@ -61,17 +107,80 @@ function calcRowTotal(row) {
 }
 
 export default function BusinessArea() {
+  const meta = loadDraftMeta();
   const [rows, setRows] = useState(() => {
     const draft = loadDraft();
     if (draft.length) return draft;
     return [emptyRow()];
   });
-  const [clientName, setClientName] = useState("");
-  const [quoteDate, setQuoteDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [clientName, setClientName] = useState(meta.clientName);
+  const [quoteDate, setQuoteDate] = useState(meta.quoteDate);
+  const [savedQuotes, setSavedQuotesState] = useState(getSavedQuotes);
+  const [selectedQuoteId, setSelectedQuoteId] = useState("");
 
   useEffect(() => {
     saveDraft(rows);
   }, [rows]);
+
+  useEffect(() => {
+    saveDraftMeta({ clientName, quoteDate });
+  }, [clientName, quoteDate]);
+
+  const loadQuote = (quote) => {
+    if (!quote) return;
+    const nextRows = normalizeRows(quote.rows).length ? normalizeRows(quote.rows) : [emptyRow()];
+    const nextClient = quote.clientName || "";
+    const nextDate = quote.quoteDate || new Date().toISOString().slice(0, 10);
+    setRows(nextRows);
+    setClientName(nextClient);
+    setQuoteDate(nextDate);
+    saveDraft(nextRows);
+    saveDraftMeta({ clientName: nextClient, quoteDate: nextDate });
+  };
+
+  const handleSelectSavedQuote = (e) => {
+    const id = e.target.value;
+    setSelectedQuoteId(id);
+    if (!id) return;
+    const list = getSavedQuotes();
+    const q = list.find((x) => String(x.id) === String(id));
+    if (q) loadQuote(q);
+  };
+
+  const handleSaveCurrentQuote = () => {
+    const list = getSavedQuotes();
+    const newQuote = {
+      id: String(Date.now()),
+      clientName,
+      quoteDate,
+      rows: [...rows],
+      createdAt: new Date().toISOString(),
+    };
+    setSavedQuotes([...list, newQuote]);
+    setSavedQuotesState([...list, newQuote]);
+    setSelectedQuoteId(newQuote.id);
+  };
+
+  const handleNewQuote = () => {
+    setSelectedQuoteId("");
+    setRows([emptyRow()]);
+    setClientName("");
+    setQuoteDate(new Date().toISOString().slice(0, 10));
+    saveDraft([emptyRow()]);
+    saveDraftMeta({ clientName: "", quoteDate: new Date().toISOString().slice(0, 10) });
+  };
+
+  const handleDeleteSavedQuote = () => {
+    if (!selectedQuoteId) return;
+    const list = getSavedQuotes().filter((q) => String(q.id) !== String(selectedQuoteId));
+    setSavedQuotes(list);
+    setSavedQuotesState(list);
+    setSelectedQuoteId("");
+    setRows([emptyRow()]);
+    setClientName("");
+    setQuoteDate(new Date().toISOString().slice(0, 10));
+    saveDraft([emptyRow()]);
+  };
 
   const addRow = () => setRows((r) => [...r, emptyRow()]);
 
@@ -101,6 +210,42 @@ export default function BusinessArea() {
         <p className="section-subtitle">
           רק בעל העסק רואה אזור זה. כאן ניתן להכין הצעות מחיר.
         </p>
+
+        <div className="quote-selector-bar">
+          <label htmlFor="quote-select-saved" className="quote-selector-label">
+            הצעות שמורות:
+          </label>
+          <select
+            id="quote-select-saved"
+            value={selectedQuoteId}
+            onChange={handleSelectSavedQuote}
+            className="quote-select-select"
+            aria-label="בחר הצעה שמורה"
+          >
+            <option value="">— הצעה נוכחית —</option>
+            {savedQuotes.map((q) => (
+              <option key={q.id} value={q.id}>
+                {q.clientName || "(ללא שם)"} – {q.quoteDate}
+              </option>
+            ))}
+          </select>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={handleSaveCurrentQuote}>
+            שמור הצעה נוכחית
+          </button>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={handleNewQuote}>
+            הצעה חדשה
+          </button>
+          {selectedQuoteId && (
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={handleDeleteSavedQuote}
+              aria-label="מחק הצעה שמורה"
+            >
+              מחק הצעה
+            </button>
+          )}
+        </div>
 
         <div className="quote-card">
           <div className="quote-confidential print-only" aria-hidden="true">
@@ -289,6 +434,7 @@ export default function BusinessArea() {
               הדפס הצעה
             </button>
           </div>
+          <p className="quote-pdf-hint">לשמירה כ־PDF: לחץ הדפס ובחר &quot;שמור כ־PDF&quot; ביעד ההדפסה.</p>
         </div>
 
         <p className="business-hint">הטיוטה נשמרת אוטומטית בדפדפן.</p>

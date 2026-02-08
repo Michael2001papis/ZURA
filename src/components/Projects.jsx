@@ -26,7 +26,7 @@ export default function Projects() {
   const addItem = () => {
     setItems((list) => [
       ...list,
-      { id: String(Date.now()), title: "פרויקט חדש", location: "" },
+      { id: String(Date.now()), title: "פרויקט חדש", location: "", image: "" },
     ]);
   };
 
@@ -67,44 +67,65 @@ export default function Projects() {
       </div>
       <p className="section-subtitle">לפני ואחרי – דוגמאות מעבודות שבוצעו</p>
       <div className="projects-grid">
-        {displayItems.map((item) => (
-          <article key={item.id} className="project-card">
-            <div className="project-placeholder">תמונה לפני / אחרי – יועלה בהמשך</div>
-            <div className="project-info">
-              {isBusiness && editing ? (
-                <>
-                  <input
-                    type="text"
-                    value={item.title}
-                    onChange={(e) => updateItem(item.id, "title", e.target.value)}
-                    className="edit-input project-edit-title"
-                    placeholder="כותרת"
-                  />
-                  <input
-                    type="text"
-                    value={item.location}
-                    onChange={(e) => updateItem(item.id, "location", e.target.value)}
-                    className="edit-input"
-                    placeholder="מיקום"
-                  />
-                  <button
-                    type="button"
-                    className="btn-remove-item"
-                    onClick={() => removeItem(item.id)}
-                    aria-label="הסר פרויקט"
-                  >
-                    הסר
-                  </button>
-                </>
+        {displayItems.map((item) => {
+          const imgSrc = (item.image || "").trim();
+          return (
+            <article key={item.id} className="project-card">
+              {imgSrc ? (
+                <img
+                  src={imgSrc}
+                  alt={`${item.title} – לפני ואחרי`}
+                  className="project-image"
+                  loading="lazy"
+                />
               ) : (
-                <>
-                  <h3>{item.title}</h3>
-                  <p>{item.location}</p>
-                </>
+                <div className="project-placeholder">
+                  {editing ? "קישור לתמונה (URL)" : "תמונה לפני / אחרי – יועלה בהמשך"}
+                </div>
               )}
-            </div>
-          </article>
-        ))}
+              <div className="project-info">
+                {isBusiness && editing ? (
+                  <>
+                    <input
+                      type="text"
+                      value={item.title}
+                      onChange={(e) => updateItem(item.id, "title", e.target.value)}
+                      className="edit-input project-edit-title"
+                      placeholder="כותרת"
+                    />
+                    <input
+                      type="text"
+                      value={item.location}
+                      onChange={(e) => updateItem(item.id, "location", e.target.value)}
+                      className="edit-input"
+                      placeholder="מיקום"
+                    />
+                    <input
+                      type="url"
+                      value={item.image || ""}
+                      onChange={(e) => updateItem(item.id, "image", e.target.value)}
+                      className="edit-input"
+                      placeholder="קישור לתמונה (אופציונלי)"
+                    />
+                    <button
+                      type="button"
+                      className="btn-remove-item"
+                      onClick={() => removeItem(item.id)}
+                      aria-label="הסר פרויקט"
+                    >
+                      הסר
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h3>{item.title}</h3>
+                    <p>{item.location}</p>
+                  </>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
