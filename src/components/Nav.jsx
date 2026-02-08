@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth, BUSINESS_USER } from "../context/AuthContext";
 
@@ -18,17 +18,36 @@ const BUSINESS_LINKS = [
   { href: "#projects", label: "פרויקטים" },
 ];
 
-const THEMES = [
+const MAIN_THEMES = [
   { id: "light", label: "מצב בהיר", icon: "☀️" },
   { id: "dark", label: "מצב כהה", icon: "🌙" },
-  { id: "accessibility-a", label: "נגישות א (תכלת)", icon: "♿" },
-  { id: "accessibility-b", label: "נגישות ב (ירוק)", icon: "♿" },
+  { id: "accessibility", label: "נגישות", icon: "♿" },
+];
+
+const ACCESSIBILITY_OPTIONS = [
+  { id: "accessibility-a", label: "תכלת" },
+  { id: "accessibility-b", label: "ירוק" },
 ];
 
 export default function Nav({ onOpenLogin }) {
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [accessibilityMenuOpen, setAccessibilityMenuOpen] = useState(false);
+  const accessibilityRef = useRef(null);
+
+  const isAccessibility = theme === "accessibility-a" || theme === "accessibility-b";
+
+  useEffect(() => {
+    if (!accessibilityMenuOpen) return;
+    const close = (e) => {
+      if (accessibilityRef.current && !accessibilityRef.current.contains(e.target)) {
+        setAccessibilityMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, [accessibilityMenuOpen]);
 
   return (
     <header className="nav">
@@ -85,19 +104,48 @@ export default function Nav({ onOpenLogin }) {
             </li>
           </ul>
         </nav>
-        <div className="theme-toggle" role="group" aria-label="בחירת ערכת צבעים">
-          {THEMES.map(({ id, label, icon }) => (
-            <button
-              key={id}
-              type="button"
-              data-theme={id}
-              aria-pressed={theme === id}
-              title={label}
-              onClick={() => setTheme(id)}
-            >
-              {icon}
-            </button>
-          ))}
+        <div className="theme-toggle-wrap" ref={accessibilityRef}>
+          <div className="theme-toggle" role="group" aria-label="בחירת ערכת צבעים">
+            {MAIN_THEMES.map(({ id, label, icon }) => (
+              <button
+                key={id}
+                type="button"
+                data-theme={id}
+                aria-pressed={id === "accessibility" ? isAccessibility : theme === id}
+                aria-expanded={id === "accessibility" ? accessibilityMenuOpen : undefined}
+                title={label}
+                onClick={() => {
+                  if (id === "accessibility") {
+                    setAccessibilityMenuOpen((o) => !o);
+                  } else {
+                    setTheme(id);
+                    setAccessibilityMenuOpen(false);
+                  }
+                }}
+              >
+                {icon}
+              </button>
+            ))}
+          </div>
+          {accessibilityMenuOpen && (
+            <div className="theme-accessibility-menu" role="menu">
+              {ACCESSIBILITY_OPTIONS.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="menuitem"
+                  className="theme-accessibility-option"
+                  onClick={() => {
+                    setTheme(id);
+                    setAccessibilityMenuOpen(false);
+                  }}
+                  aria-pressed={theme === id}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </header>
