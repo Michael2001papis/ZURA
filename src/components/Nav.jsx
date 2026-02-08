@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 
 const LINKS = [
   { href: "#about", label: "אודות" },
@@ -15,8 +16,9 @@ const THEMES = [
   { id: "accessibility", label: "נגישות", icon: "♿" },
 ];
 
-export default function Nav() {
+export default function Nav({ onOpenLogin }) {
   const { theme, setTheme } = useTheme();
+  const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -38,14 +40,39 @@ export default function Nav() {
           <ul className={`nav-links ${menuOpen ? "is-open" : ""}`}>
             {LINKS.map(({ href, label }) => (
               <li key={href}>
-                <a
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                >
+                <a href={href} onClick={() => setMenuOpen(false)}>
                   {label}
                 </a>
               </li>
             ))}
+            <li className="nav-auth">
+              {user ? (
+                <>
+                  <span className="nav-user">שלום, {user}</span>
+                  <button
+                    type="button"
+                    className="nav-logout"
+                    onClick={() => {
+                      logout();
+                      setMenuOpen(false);
+                    }}
+                  >
+                    יציאה
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="nav-login"
+                  onClick={() => {
+                    onOpenLogin?.();
+                    setMenuOpen(false);
+                  }}
+                >
+                  כניסה
+                </button>
+              )}
+            </li>
           </ul>
         </nav>
         <div className="theme-toggle" role="group" aria-label="בחירת ערכת צבעים">

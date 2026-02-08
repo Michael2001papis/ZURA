@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import Nav from "./components/Nav";
+import LoginModal from "./components/LoginModal";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
@@ -19,6 +21,7 @@ import SkipToContent from "./components/SkipToContent";
 
 function AppContent() {
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
     const count = getVisitCount();
@@ -38,22 +41,24 @@ function AppContent() {
   };
 
   useEffect(() => {
-    if (overlayOpen) document.body.style.overflow = "hidden";
+    if (overlayOpen || loginModalOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
-  }, [overlayOpen]);
+  }, [overlayOpen, loginModalOpen]);
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape" && overlayOpen) closeOverlay();
+      if (e.key !== "Escape") return;
+      if (overlayOpen) closeOverlay();
+      if (loginModalOpen) setLoginModalOpen(false);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [overlayOpen]);
+  }, [overlayOpen, loginModalOpen]);
 
   return (
     <>
       <SkipToContent />
-      <Nav />
+      <Nav onOpenLogin={() => setLoginModalOpen(true)} />
       <main id="main-content">
         <Hero />
         <About />
@@ -64,6 +69,7 @@ function AppContent() {
       </main>
       <Footer />
       <ContactOverlay open={overlayOpen} onClose={closeOverlay} />
+      <LoginModal open={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       <ScrollToTop />
     </>
   );
@@ -72,7 +78,9 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

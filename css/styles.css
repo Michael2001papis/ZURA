@@ -516,6 +516,117 @@ section {
   padding: 0.25rem;
 }
 
+/* ----- כניסת משתמש ----- */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 12px 40px var(--shadow-strong);
+}
+
+.login-modal-close {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  padding: 0.25rem;
+}
+
+.login-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.35rem;
+  color: var(--text-primary);
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.login-form .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.login-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin: -0.5rem 0 0.5rem;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 769px) {
+  .nav-auth {
+    margin-top: 0;
+  }
+}
+
+.nav-user {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.nav-login,
+.nav-logout {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nav-login:hover,
+.nav-logout:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ----- רספונסיב ----- */
 @media (max-width: 768px) {
   .nav-links {
