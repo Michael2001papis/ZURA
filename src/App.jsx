@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
 import Projects from "./components/Projects";
+import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ContactOverlay, {
@@ -13,6 +14,8 @@ import ContactOverlay, {
   shouldShowOverlay,
   OVERLAY_CLOSED_KEY,
 } from "./components/ContactOverlay";
+import ScrollToTop from "./components/ScrollToTop";
+import SkipToContent from "./components/SkipToContent";
 
 function AppContent() {
   const [overlayOpen, setOverlayOpen] = useState(false);
@@ -49,16 +52,19 @@ function AppContent() {
 
   return (
     <>
+      <SkipToContent />
       <Nav />
-      <main>
+      <main id="main-content">
         <Hero />
         <About />
         <Services />
         <Projects />
+        <Testimonials />
         <Contact />
       </main>
       <Footer />
       <ContactOverlay open={overlayOpen} onClose={closeOverlay} />
+      <ScrollToTop />
     </>
   );
 }

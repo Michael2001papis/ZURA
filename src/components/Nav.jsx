@@ -5,6 +5,7 @@ const LINKS = [
   { href: "#about", label: "אודות" },
   { href: "#services", label: "שירותים" },
   { href: "#projects", label: "פרויקטים" },
+  { href: "#testimonials", label: "המלצות" },
   { href: "#contact", label: "צור קשר" },
 ];
 

@@ -453,6 +453,15 @@ section {
   font-size: 0.95rem;
 }
 
+.footer-wa {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.footer-wa:hover {
+  text-decoration: underline;
+}
+
 /* ----- חלונית יצירת קשר (עתידי) ----- */
 .contact-overlay {
   position: fixed;
@@ -518,6 +527,80 @@ section {
   section {
     padding: 3rem 1rem;
   }
+}
+
+/* ----- דלג לתוכן (נגישות) ----- */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  right: 1rem;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: top 0.2s;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.skip-to-content:focus {
+  top: 1rem;
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+/* ----- כפתור חזרה למעלה ----- */
+.scroll-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 90;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px var(--shadow-strong);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.scroll-to-top:hover {
+  transform: scale(1.08);
+}
+.scroll-to-top:focus {
+  outline: 3px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+/* ----- סקשן המלצות ----- */
+.testimonials-section {
+  background: var(--bg-secondary);
+}
+.testimonials-placeholder {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.testimonials-placeholder p {
+  margin: 0.5rem 0;
+}
+
+/* ----- כניסה לסקשנים (אנימציה קלה) ----- */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.section-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ----- utility ----- */
