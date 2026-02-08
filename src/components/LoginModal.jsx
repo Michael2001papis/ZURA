@@ -15,7 +15,7 @@ export default function LoginModal({ open, onClose }) {
       setPassword("");
       onClose();
     } else {
-      setError("שם משתמש או סיסמה שגויים");
+      setError("פרטי ההתחברות שגויים");
     }
   };
 

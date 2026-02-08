@@ -104,7 +104,7 @@ export default function BusinessArea() {
 
         <div className="quote-card">
           <div className="quote-confidential print-only" aria-hidden="true">
-            //סודי// — מסמך פנימי, באישור מנהל העסק
+            //סודי// – מסמך פנימי, באישור מנהל העסק
           </div>
 
           <h3 className="quote-title">הצעת מחיר</h3>
