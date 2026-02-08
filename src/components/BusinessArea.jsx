@@ -110,38 +110,53 @@ export default function BusinessArea() {
           <h3 className="quote-title">הצעת מחיר</h3>
 
           <div className="quote-meta">
-            <label>
+            <label htmlFor="quote-client-name">
               שם הלקוח
               <input
+                id="quote-client-name"
                 type="text"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
                 placeholder="שם הלקוח"
+                aria-label="שם הלקוח"
               />
             </label>
-            <label>
+            <label htmlFor="quote-date">
               תאריך
               <input
+                id="quote-date"
                 type="date"
                 value={quoteDate}
                 onChange={(e) => setQuoteDate(e.target.value)}
+                aria-label="תאריך ההצעה"
               />
             </label>
           </div>
 
           <div className="quote-table-wrap">
-            <table className="quote-table">
+            <table className="quote-table" role="table">
+              <colgroup>
+                <col className="col-work-type" />
+                <col className="col-description" />
+                <col className="col-unit" />
+                <col className="col-num" />
+                <col className="col-num" />
+                <col className="col-num" />
+                <col className="col-num" />
+                <col className="col-num" />
+                <col className="col-action" />
+              </colgroup>
               <thead>
                 <tr>
-                  <th className="col-work-type">סוג עבודה</th>
-                  <th>תיאור</th>
-                  <th className="col-unit">יחידה</th>
-                  <th className="col-num">כמות</th>
-                  <th className="col-num">אחוז עבודה</th>
-                  <th className="col-num">מחיר ליחידה (₪)</th>
-                  <th className="col-num">הנחה %</th>
-                  <th className="col-num">סה"כ (₪)</th>
-                  <th className="col-action"></th>
+                  <th scope="col" className="col-work-type">סוג עבודה</th>
+                  <th scope="col" className="col-description">תיאור</th>
+                  <th scope="col" className="col-unit">יחידה</th>
+                  <th scope="col" className="col-num">כמות</th>
+                  <th scope="col" className="col-num">אחוז עבודה</th>
+                  <th scope="col" className="col-num">מחיר ליחידה (₪)</th>
+                  <th scope="col" className="col-num">הנחה %</th>
+                  <th scope="col" className="col-num">סה"כ (₪)</th>
+                  <th scope="col" className="col-action" aria-label="מחיקה"></th>
                 </tr>
               </thead>
               <tbody>

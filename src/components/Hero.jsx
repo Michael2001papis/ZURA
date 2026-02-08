@@ -24,7 +24,7 @@ export default function Hero() {
             href={WHATSAPP_URL}
             className="btn btn-primary"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             וואטסאפ – להצעת מחיר
           </a>

@@ -10,7 +10,7 @@ export default function Footer() {
         </a>
         <p>מ.פ. פרויקטים – שיפוצים ועבודות בניין | ראשון לציון, גוש דן</p>
         <p>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="footer-wa">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="footer-wa">
             צור קשר בוואטסאפ
           </a>
         </p>

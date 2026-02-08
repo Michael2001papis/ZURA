@@ -967,7 +967,7 @@ section {
   }
 
   .quote-table {
-    min-width: 380px;
+    min-width: 720px;
   }
 
   .scroll-to-top {
@@ -1247,36 +1247,52 @@ section {
   overflow-x: auto;
   margin: 1rem 0;
   -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
 }
 
 .quote-table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: fixed;
 }
 
 .quote-table th,
 .quote-table td {
-  padding: 0.6rem 0.5rem;
-  text-align: right;
+  padding: 0.65rem 0.6rem;
   border-bottom: 1px solid var(--border);
+  vertical-align: middle;
 }
 
 .quote-table th {
   font-weight: 600;
   color: var(--text-primary);
   background: var(--bg-secondary);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.quote-table th.col-num,
+.quote-table td.col-num {
+  text-align: center;
 }
 
 .quote-table .col-work-type {
-  min-width: 100px;
+  width: 11%;
+  min-width: 95px;
 }
 
 .quote-table .col-description {
+  width: 20%;
   min-width: 140px;
-  width: 180px;
   vertical-align: top;
+}
+
+.quote-table td.col-description {
+  text-align: right;
 }
 
 .quote-table .col-description textarea {
@@ -1302,24 +1318,46 @@ section {
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-top: 0.2rem;
-  text-align: left;
+  text-align: right;
+  direction: rtl;
 }
 
 .quote-table .col-unit {
-  min-width: 72px;
-  text-align: center;
+  width: 8%;
+  min-width: 68px;
 }
 
 .quote-table .col-num {
-  width: 90px;
-  min-width: 70px;
-  text-align: center;
+  width: 9%;
+  min-width: 72px;
 }
 
 .quote-table .col-action {
   width: 44px;
   min-width: 44px;
-  text-align: center;
+}
+
+.quote-table thead tr {
+  border-bottom: 2px solid var(--border);
+}
+
+.quote-table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
+.quote-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.quote-table tfoot tr {
+  border-top: 2px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.quote-table tfoot td {
+  padding: 0.85rem 0.6rem;
+  font-weight: 700;
+  border-bottom: none;
 }
 
 .quote-table .col-work-type select,
@@ -1361,14 +1399,8 @@ section {
   color: var(--text-primary);
 }
 
-.quote-table tfoot td {
-  border-bottom: none;
-  padding-top: 0.75rem;
-  font-weight: 700;
-}
-
-.grand-total-label {
-  text-align: left;
+.quote-table tfoot .grand-total-label {
+  text-align: right;
   font-size: 1.05rem;
 }
 

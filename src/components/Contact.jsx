@@ -55,7 +55,7 @@ export default function Contact() {
             </li>
             <li>
               <strong>וואטסאפ:</strong>{" "}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 {CONTACT_PHONE}
               </a>
             </li>
