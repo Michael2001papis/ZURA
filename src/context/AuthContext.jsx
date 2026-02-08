@@ -4,6 +4,9 @@ const AUTH_KEY = "mp-projects-auth";
 const VALID_USER = "zura";
 const VALID_PASS = "Z123456";
 
+/** משתמש עסקי – בעל העסק (ניווט מצומצם + עריכת תוכן) */
+export const BUSINESS_USER = VALID_USER;
+
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {

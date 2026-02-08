@@ -6,7 +6,7 @@ export default function Testimonials() {
       <h2 id="testimonials-title" className="section-title">
         המלצות
       </h2>
-      <p className="section-subtitle">מלקוחות מרוצים – יופיעו בהמשך</p>
+      <p className="section-subtitle">מ־לקוחות מרוצים – יופיעו בהמשך</p>
       <div className="testimonials-placeholder">
         <p>המלצות לקוחות יתווספו כאן לאחר איסוף החומר.</p>
         <p>לאחר סיום עבודה – ניתן לבקש המלצה.</p>

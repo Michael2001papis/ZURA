@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
+import { useAuth, BUSINESS_USER } from "../context/AuthContext";
 
 const LINKS = [
   { href: "#about", label: "אודות" },
@@ -17,8 +17,6 @@ const BUSINESS_LINKS = [
   { href: "#services", label: "שירותים" },
   { href: "#projects", label: "פרויקטים" },
 ];
-
-const BUSINESS_USER = "zura";
 
 const THEMES = [
   { id: "light", label: "מצב בהיר", icon: "☀️" },

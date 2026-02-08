@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getContactDraft, setContactDraft } from "../utils/userMemory";
-
-const EMAIL = "zurapapismedov@gmail.com";
+import { CONTACT_EMAIL } from "../utils/constants";
 const VISIT_COUNT_KEY = "mp-projects-visits";
 const OVERLAY_CLOSED_KEY = "mp-projects-overlay-closed";
 
@@ -47,7 +46,7 @@ export default function ContactOverlay({ open, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = `שם: ${name}\nטלפון: ${phone}\n\nהודעה:\n${message}`;
-    window.location.href = `mailto:${EMAIL}?subject=פנייה מאתר מ.פ. פרויקטים (חלונית)&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=פנייה מאתר מ.פ. פרויקטים (חלונית)&body=${encodeURIComponent(body)}`;
     onClose();
   };
 

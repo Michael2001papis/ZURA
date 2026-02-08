@@ -1,5 +1,6 @@
 import React from "react";
 import { getContactDraft } from "../utils/userMemory";
+import { WHATSAPP_URL } from "../utils/constants";
 
 export default function Hero() {
   const draft = getContactDraft();
@@ -20,7 +21,7 @@ export default function Hero() {
         </p>
         <div className="hero-cta">
           <a
-            href="https://wa.me/972545820008"
+            href={WHATSAPP_URL}
             className="btn btn-primary"
             target="_blank"
             rel="noopener"

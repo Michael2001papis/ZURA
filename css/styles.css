@@ -862,6 +862,16 @@ section {
     min-width: 80px;
   }
 
+  .quote-table .col-description {
+    min-width: 110px;
+    width: 140px;
+  }
+
+  .quote-table .col-description textarea {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
   .quote-table .col-unit {
     min-width: 58px;
   }
@@ -1263,6 +1273,38 @@ section {
   min-width: 100px;
 }
 
+.quote-table .col-description {
+  min-width: 140px;
+  width: 180px;
+  vertical-align: top;
+}
+
+.quote-table .col-description textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  resize: vertical;
+  display: block;
+  box-sizing: border-box;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.quote-table .col-description .desc-char-count {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+  text-align: left;
+}
+
 .quote-table .col-unit {
   min-width: 72px;
   text-align: center;
@@ -1404,6 +1446,28 @@ section {
   .quote-card {
     box-shadow: none;
     border: 1px solid #333;
+  }
+
+  .quote-table .col-description {
+    min-width: 120px;
+    width: 22%;
+    max-width: 200px;
+    overflow: visible;
+  }
+
+  .quote-table .col-description textarea {
+    border: none;
+    background: transparent;
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+    resize: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .quote-table .col-description .desc-char-count {
+    display: none;
   }
 
   body {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth, BUSINESS_USER } from "./context/AuthContext";
 import Nav from "./components/Nav";
 import LoginModal from "./components/LoginModal";
 import BusinessArea from "./components/BusinessArea";
@@ -19,8 +19,6 @@ import ContactOverlay, {
 } from "./components/ContactOverlay";
 import ScrollToTop from "./components/ScrollToTop";
 import SkipToContent from "./components/SkipToContent";
-
-const BUSINESS_USER = "zura";
 
 function AppContent() {
   const { user } = useAuth();

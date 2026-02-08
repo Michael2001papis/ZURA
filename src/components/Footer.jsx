@@ -1,4 +1,5 @@
 import React from "react";
+import { WHATSAPP_URL } from "../utils/constants";
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
         </a>
         <p>מ.פ. פרויקטים – שיפוצים ועבודות בניין | ראשון לציון, גוש דן</p>
         <p>
-          <a href="https://wa.me/972545820008" target="_blank" rel="noopener" className="footer-wa">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="footer-wa">
             צור קשר בוואטסאפ
           </a>
         </p>

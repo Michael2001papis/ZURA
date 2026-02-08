@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getContactDraft, setContactDraft } from "../utils/userMemory";
-
-const EMAIL = "zurapapismedov@gmail.com";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, WHATSAPP_URL } from "../utils/constants";
 
 function buildMailto(body) {
-  return `mailto:${EMAIL}?subject=פנייה מאתר מ.פ. פרויקטים&body=${encodeURIComponent(body)}`;
+  return `mailto:${CONTACT_EMAIL}?subject=פנייה מאתר מ.פ. פרויקטים&body=${encodeURIComponent(body)}`;
 }
 
 export default function Contact() {
@@ -52,17 +51,17 @@ export default function Contact() {
             </li>
             <li>
               <strong>טלפון:</strong>{" "}
-              <a href="tel:+972545820008">054-5820008</a>
+              <a href={`tel:${CONTACT_PHONE_TEL}`}>{CONTACT_PHONE}</a>
             </li>
             <li>
               <strong>וואטסאפ:</strong>{" "}
-              <a href="https://wa.me/972545820008" target="_blank" rel="noopener">
-                054-5820008
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener">
+                {CONTACT_PHONE}
               </a>
             </li>
             <li>
               <strong>אימייל:</strong>{" "}
-              <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </li>
             <li>
               <strong>כתובת:</strong> גולדברג הנדבן 14, ראשון לציון

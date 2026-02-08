@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth, BUSINESS_USER } from "../context/AuthContext";
 import { getAbout, setAbout } from "../utils/siteContent";
-
-const BUSINESS_USER = "zura";
 
 export default function About() {
   const { user } = useAuth();

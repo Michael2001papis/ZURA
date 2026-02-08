@@ -169,13 +169,18 @@ export default function BusinessArea() {
                           />
                         )}
                       </td>
-                      <td>
-                        <input
-                          type="text"
+                      <td className="col-description">
+                        <textarea
                           value={row.description}
-                          onChange={(e) => updateRow(row.id, "description", e.target.value)}
-                          placeholder="תיאור הפריט"
+                          onChange={(e) => updateRow(row.id, "description", e.target.value.slice(0, 50))}
+                          placeholder="תיאור הפריט (עד 50 אותיות)"
+                          maxLength={50}
+                          rows={2}
+                          aria-label="תיאור (עד 50 אותיות)"
                         />
+                        <span className="desc-char-count" aria-hidden="true">
+                          {(row.description || "").length}/50
+                        </span>
                       </td>
                       <td className="col-unit">
                         <select
