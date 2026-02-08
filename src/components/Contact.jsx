@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { getContactDraft, setContactDraft } from "../utils/userMemory";
 
 const EMAIL = "zurapapismedov@gmail.com";
 
@@ -7,15 +8,29 @@ function buildMailto(body) {
 }
 
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const draft = getContactDraft();
+  const [name, setName] = useState(draft.name);
+  const [phone, setPhone] = useState(draft.phone);
+  const [email, setEmail] = useState(draft.email);
   const [message, setMessage] = useState("");
+  const saveTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    saveTimeoutRef.current = setTimeout(() => {
+      setContactDraft({ name, phone, email });
+    }, 500);
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, [name, phone, email]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.location.href = buildMailto(`שם: ${name}\nטלפון: ${phone}\n\nהודעה:\n${message}`);
   };
+
+  const hasStored = draft.name || draft.phone || draft.email;
 
   return (
     <section id="contact" aria-labelledby="contact-title">
@@ -23,6 +38,11 @@ export default function Contact() {
         צור קשר
       </h2>
       <p className="section-subtitle">להצעת מחיר או תיאום פגישה – נשמח לשמוע מכם</p>
+      {hasStored && (
+        <p className="contact-welcome-back" aria-live="polite">
+          שלום שוב! מילאנו עבורך את הפרטים מהביקור הקודם.
+        </p>
+      )}
       <div className="contact-wrap">
         <div className="contact-details">
           <h3>פרטי התקשרות</h3>
@@ -97,6 +117,7 @@ export default function Contact() {
               שליחת פנייה
             </button>
           </form>
+          <p className="contact-saved-hint">הפרטים נשמרים אוטומטית להבא.</p>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { getContactDraft, setContactDraft } from "../utils/userMemory";
 
 const EMAIL = "zurapapismedov@gmail.com";
 const VISIT_COUNT_KEY = "mp-projects-visits";
@@ -20,9 +21,28 @@ function shouldShowOverlay() {
 }
 
 export default function ContactOverlay({ open, onClose }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const draft = getContactDraft();
+  const [name, setName] = useState(draft.name);
+  const [phone, setPhone] = useState(draft.phone);
   const [message, setMessage] = useState("");
+  const saveTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const d = getContactDraft();
+    setName(d.name);
+    setPhone(d.phone);
+  }, [open]);
+
+  useEffect(() => {
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    saveTimeoutRef.current = setTimeout(() => {
+      setContactDraft({ name, phone, email: getContactDraft().email });
+    }, 500);
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, [name, phone]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

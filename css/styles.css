@@ -149,6 +149,13 @@ section {
   letter-spacing: 0.02em;
 }
 
+.hero-welcome-back {
+  font-size: 1.1rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
 .hero-tagline {
   font-size: clamp(1.1rem, 2.5vw, 1.35rem);
   color: var(--text-secondary);
@@ -427,6 +434,19 @@ section {
 .contact-form .btn {
   width: 100%;
   justify-content: center;
+}
+
+.contact-welcome-back {
+  color: var(--accent);
+  font-weight: 500;
+  margin: -0.5rem 0 1rem;
+  font-size: 0.95rem;
+}
+
+.contact-saved-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 /* ----- פוטר ----- */
